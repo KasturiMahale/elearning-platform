@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password,
       });
@@ -20,7 +21,7 @@ function LoginPage() {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
 
-      navigate('/courses'); // ab yahan redirect hoga, alert ki jagah
+      navigate('/courses');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }

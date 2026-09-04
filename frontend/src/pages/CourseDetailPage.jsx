@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 function CourseDetailPage() {
   const { id } = useParams();
@@ -12,7 +13,7 @@ function CourseDetailPage() {
     const fetchCourse = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:5000/api/courses/${id}`, {
+        const response = await axios.get(`${API_URL}/api/courses/${id}`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         setCourse(response.data);
@@ -33,7 +34,7 @@ function CourseDetailPage() {
       }
 
       await axios.post(
-        'http://localhost:5000/api/enrollments',
+        `${API_URL}/api/enrollments`,
         { courseId: id },
         { headers: { Authorization: `Bearer ${token}` } }
       );

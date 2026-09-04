@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { API_URL } from '../config';
 
 function MyLearningPage() {
   const [enrollments, setEnrollments] = useState([]);
@@ -9,7 +9,7 @@ function MyLearningPage() {
   const fetchEnrollments = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/enrollments/my', {
+      const response = await axios.get(`${API_URL}/api/enrollments/my`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEnrollments(response.data);
@@ -26,11 +26,11 @@ function MyLearningPage() {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        'http://localhost:5000/api/enrollments/complete-lesson',
+        `${API_URL}/api/enrollments/complete-lesson`,
         { enrollmentId, lessonId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      fetchEnrollments(); // refresh list to show updated progress
+      fetchEnrollments();
     } catch (err) {
       alert('Failed to mark lesson complete');
     }

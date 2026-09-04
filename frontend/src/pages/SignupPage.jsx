@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 function SignupPage() {
   const [name, setName] = useState('');
@@ -15,7 +16,7 @@ function SignupPage() {
     setSuccess('');
 
     try {
-      await axios.post('http://localhost:5000/api/auth/signup', {
+      await axios.post(`${API_URL}/api/auth/signup`, {
         name,
         email,
         password,

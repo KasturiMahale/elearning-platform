@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { API_URL } from '../config';
 
 function CoursesPage() {
   const [courses, setCourses] = useState([]);
@@ -9,7 +10,7 @@ function CoursesPage() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/courses');
+        const response = await axios.get(`${API_URL}/api/courses`);
         setCourses(response.data);
       } catch (err) {
         setError('Failed to load courses');

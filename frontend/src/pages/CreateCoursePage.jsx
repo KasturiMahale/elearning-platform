@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config';
 
 function CreateCoursePage() {
   const [title, setTitle] = useState('');
@@ -32,7 +33,7 @@ function CreateCoursePage() {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5000/api/courses',
+        `${API_URL}/api/courses`,
         {
           title,
           description,
