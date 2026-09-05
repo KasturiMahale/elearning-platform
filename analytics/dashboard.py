@@ -7,9 +7,13 @@ import os
 # Page config
 st.set_page_config(page_title="E-Learning Analytics", layout="wide")
 
-# Connect to MongoDB
-load_dotenv('../backend/.env')
-mongo_uri = os.getenv('MONGO_URI')
+# Try Streamlit secrets first (for deployed app), fallback to .env (for local dev)
+try:
+    mongo_uri = st.secrets["MONGO_URI"]
+except:
+    load_dotenv('../backend/.env')
+    mongo_uri = os.getenv('MONGO_URI')
+
 client = MongoClient(mongo_uri)
 db = client['elearning']
 
@@ -92,7 +96,7 @@ st.header("🔍 Raw Data Explorer")
 data_choice = st.selectbox("Select a dataset to explore:", ['Users', 'Courses', 'Enrollments', 'Events'])
 
 if data_choice == 'Users':
-    st.dataframe(users_df)
+    st.dataframe(users_df.drop(columns=['password']))
 elif data_choice == 'Courses':
     st.dataframe(courses_df)
 elif data_choice == 'Enrollments':
